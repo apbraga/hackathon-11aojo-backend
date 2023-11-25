@@ -50,9 +50,9 @@ jobs:
       run: ./gradlew build
 
 
-    # grant access to DockerFile
+    # grant access to Dockerfile
     - name: Grant access to Dockerfile
-      run: chmod 777 ./DockerFile
+      run: chmod 777 ./Dockerfile
 
     - name: Build, tag, and push image to Amazon ECR
       env:
