@@ -49,6 +49,11 @@ jobs:
     - name: Build JAR
       run: ./gradlew build
 
+
+    # grant access to DockerFile
+    - name: Grant access to Dockerfile
+      run: chmod +x Dockerfile
+
     - name: Build, tag, and push image to Amazon ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
