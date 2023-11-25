@@ -82,4 +82,4 @@ jobs:
       with:
         cluster: hackathon-backend-prod
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: hackathon-backend-prod
+        service: test
