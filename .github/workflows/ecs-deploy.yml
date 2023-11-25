@@ -69,7 +69,7 @@ jobs:
 
     # get task description from aws
     - name: Get the Amazon ECS task definition
-      id: task-def
+      id: task-def-details
       run: |
         echo "Getting the Amazon ECS task definition"
         aws ecs describe-task-definition --task-definition hackathon-backend-prod > infra/task-definition.json
