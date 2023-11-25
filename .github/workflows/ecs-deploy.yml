@@ -63,9 +63,6 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      # grant access to Dockerfile
-    - name: Grant access to Dockerfile
-      run: chmod 777 infra/task-definition.json
 
     # get task description from aws
     - name: Get the Amazon ECS task definition
@@ -73,6 +70,11 @@ jobs:
       run: |
         echo "Getting the Amazon ECS task definition"
         aws ecs describe-task-definition --task-definition hackathon-backend-prod > infra/task-definition.json
+
+
+      # grant access to Dockerfile
+    - name: Grant access to Dockerfile
+      run: chmod 777 infra/task-definition.json
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
