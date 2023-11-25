@@ -52,7 +52,7 @@ jobs:
 
     # grant access to DockerFile
     - name: Grant access to Dockerfile
-      run: chmod +x Dockerfile
+      run: chmod 777 Dockerfile
 
     - name: Build, tag, and push image to Amazon ECR
       env:
