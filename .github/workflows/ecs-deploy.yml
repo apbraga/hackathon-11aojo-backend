@@ -67,6 +67,13 @@ jobs:
     - name: Grant access to Dockerfile
       run: chmod 777 infra/task-definition.json
 
+    # get task description from aws
+    - name: Get the Amazon ECS task definition
+      id: task-def
+      run: |
+        echo "Getting the Amazon ECS task definition"
+        aws ecs describe-task-definition --task-definition hackathon-backend-prod > infra/task-definition.json
+
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
@@ -78,6 +85,6 @@ jobs:
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
-        service: hackathon-backend-prod
         cluster: hackathon-backend-prod
+
         task-definition: ${{ steps.task-def.outputs.task-definition }}
