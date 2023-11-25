@@ -1,0 +1,20 @@
+# Use a imagem do Gradle com JDK 17 para construir o projeto
+FROM gradle:7.4.2-jdk17 as builder
+
+# Copie o código local para a imagem do contêiner e defina o diretório de trabalho
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
+
+# Construa o projeto usando o Gradle
+RUN gradle build --no-daemon
+# Imprima o conteúdo da imagem do Gradle
+RUN ls -la /home/gradle/src/build/libs/
+
+# Use a imagem do OpenJDK com JDK 17 para executar a aplicação
+FROM openjdk:17
+
+# Copie o arquivo JAR construído para um diretório
+COPY --from=builder /home/gradle/src/build/libs/ /app/
+
+# Execute a aplicação
+ENTRYPOINT ["java","-jar","/app/hackaton-0.0.1-SNAPSHOT.jar"]
