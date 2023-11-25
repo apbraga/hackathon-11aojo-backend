@@ -3,11 +3,13 @@ package br.com.fiap.hackaton.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class MovieDto {
     @JsonProperty("id")
     Long id;
