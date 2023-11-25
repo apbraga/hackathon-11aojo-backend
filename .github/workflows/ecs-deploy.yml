@@ -3,7 +3,7 @@ name: Deploy to ECS
 on:
   push:
     branches:
-      - main
+      - CI/CD-with-gitHub-actions
 
 jobs:
   deploy:
@@ -13,6 +13,13 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
@@ -47,6 +54,6 @@ jobs:
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
-        service: hackathon-backend-prod-service
-        cluster: hackathon-backend-prod-cluster
+        service: hackathon-backend-prod
+        cluster: hackathon-backend-prod
         task-definition: ${{ steps.task-def.outputs.task-definition }}
